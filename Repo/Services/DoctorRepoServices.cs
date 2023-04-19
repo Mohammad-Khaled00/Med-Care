@@ -4,29 +4,56 @@ namespace Doctor_Appointment.Repo.Services
 {
     public class DoctorRepoServices : IDoctorRepo
     {
-        public void Delete(int id)
+        public MedcareDbContext Context { get; }
+
+        public DoctorRepoServices(MedcareDbContext context)
         {
-            throw new NotImplementedException();
+            Context = context;
         }
+
 
         public List<Doctor> GetAll()
         {
-            throw new NotImplementedException();
+            return Context.Doctors.ToList();
+
         }
 
         public Doctor GetById(int id)
         {
-            throw new NotImplementedException();
+            return Context.Doctors.FirstOrDefault(d => d.DoctorID == id);
         }
 
         public void Insert(Doctor doctor)
         {
-            throw new NotImplementedException();
+            Context.Add(doctor);
+            Context.SaveChanges();
         }
 
         public void Update(int id, Doctor doctor)
         {
-            throw new NotImplementedException();
+            var del_Doc = Context.Doctors.FirstOrDefault(p => p.DoctorID == id);
+
+
+            del_Doc.Clinic_Location = doctor.Clinic_Location;
+            del_Doc.Clinic_PhonNum = doctor.Clinic_PhonNum;
+            del_Doc.FullName = doctor.FullName;
+            del_Doc.Email = doctor.Email;
+            del_Doc.Degree = doctor.Degree;
+            del_Doc.WorkDays = doctor.WorkDays;
+            del_Doc.ReservationStartTime = doctor.ReservationStartTime;
+            del_Doc.ReservationEndTime = doctor.ReservationEndTime;
+            del_Doc.Description = doctor.Description;
+            del_Doc.Image= doctor.Image;
+            del_Doc.HomeExamination = doctor.HomeExamination;
+
+            Context.Doctors.Update(del_Doc);
+            Context.SaveChanges();
+        }
+        public void Delete(int id)
+        {
+            var del_Doc = Context.Doctors.FirstOrDefault(p => p.DoctorID == id);
+            Context.Doctors.Remove(del_Doc);
+            Context.SaveChanges();
         }
     }
 }

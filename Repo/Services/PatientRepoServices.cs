@@ -4,29 +4,44 @@ namespace Doctor_Appointment.Repo.Services
 {
     public class PatientRepoServices : IPatientRepo
     {
-        public void Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public MedcareDbContext Context { get; }
 
+        public PatientRepoServices(MedcareDbContext context)
+        {
+            Context = context;
+        }
         public List<Patient> GetAll()
         {
-            throw new NotImplementedException();
+           return Context.Patients.ToList();
         }
 
         public Patient GetById(int id)
         {
-            throw new NotImplementedException();
+            return Context.Patients.FirstOrDefault(p => p.PatientID == id);
         }
-
         public void Insert(Patient patient)
         {
-            throw new NotImplementedException();
+            Context.Add(patient);
+            Context.SaveChanges();
         }
 
         public void Update(int id, Patient patient)
         {
-            throw new NotImplementedException();
+            var pat = Context.Patients.FirstOrDefault(p => p.PatientID == id);
+            
+            pat.Email=patient.Email;
+            pat.Address=patient.Address;
+            pat.Age=patient.Age;
+            pat.FullName=patient.FullName;
+            pat.PhonNum=patient.PhonNum;
+            Context.Update(pat);
+            Context.SaveChanges();
+        }
+        public void Delete(int id)
+        {
+            var del_pat = Context.Patients.FirstOrDefault(p => p.PatientID == id);
+            Context.Remove(del_pat);
+            Context.SaveChanges();
         }
     }
 }

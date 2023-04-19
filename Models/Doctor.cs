@@ -78,8 +78,8 @@ namespace Doctor_Appointment.Models
             [EnumDataType(typeof(AvalibalDays))]
             public AvalibalDays WorkDays { get; set; }
 
-            [DataType(DataType.ImageUrl)]
-            public byte[] Image { get; set; }
+            //[DataType(DataType.ImageUrl)]
+            //public byte[] Image { get; set; }
 
             public bool HomeExamination { get; set; }
 

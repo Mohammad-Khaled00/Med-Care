@@ -4,29 +4,48 @@ namespace Doctor_Appointment.Repo.Services
 {
     public class AppointementRepoServices : IAppointmentRepo
     {
+        public MedcareDbContext Context { get; }
+
+        public AppointementRepoServices(MedcareDbContext context)
+        {
+            Context = context;
+        }
 
         public List<Appointment> GetAll()
         {
-            throw new NotImplementedException();
+           return Context.Appointments.ToList();
         }
 
         public Appointment GetById(int DocId , int PatId)
         {
-            throw new NotImplementedException();
+            return Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).FirstOrDefault();
+
+            
         }
 
         public void Insert(Appointment appointment)
         {
-            throw new NotImplementedException();
+            Context.Add(appointment);
+            Context.SaveChanges();
         }
 
-        public void Update(int id, Appointment appointment)
+        public void Update(int DocId, int PatId, Appointment appointment)
         {
-            throw new NotImplementedException();
+            var upd_app = Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).FirstOrDefault();
+       
+            upd_app.AppointmentDay = appointment.AppointmentDay;
+            upd_app.AppointmentTime = appointment.AppointmentTime;
+            upd_app.MedicalHistory = appointment.MedicalHistory;
+
+            Context.Update(upd_app);
+            Context.SaveChanges();
+
         }
-        public void Delete(int id)
+        public void Delete(int DocId, int PatId)
         {
-            throw new NotImplementedException();
+            var del_app = Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).FirstOrDefault();
+            Context.Appointments.Remove(del_app);
+            Context.SaveChanges();
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Doctor_Appointment
              op.UseSqlServer(connection2));
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+          
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
@@ -53,6 +54,7 @@ namespace Doctor_Appointment
             }
 
             app.UseHttpsRedirection();
+          
             app.UseStaticFiles();
 
             app.UseRouting();
