@@ -43,7 +43,6 @@ namespace Doctor_Appointment.Repo.Services
             del_Doc.ReservationStartTime = doctor.ReservationStartTime;
             del_Doc.ReservationEndTime = doctor.ReservationEndTime;
             del_Doc.Description = doctor.Description;
-            del_Doc.Image= doctor.Image;
             del_Doc.HomeExamination = doctor.HomeExamination;
 
             Context.Doctors.Update(del_Doc);
