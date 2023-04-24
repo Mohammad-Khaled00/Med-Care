@@ -32,6 +32,7 @@ namespace Doctor_Appointment.Models
     {
         Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday
     }
+
     public class Doctor
     {
             [Key]
@@ -83,7 +84,15 @@ namespace Doctor_Appointment.Models
 
             public bool HomeExamination { get; set; }
 
-        }
+            [Required]
+            public int Price { get; set; }
 
-    
+            //[Required]
+            //[Range(1, 60)]
+            //public int WatingTime { get; set; }
+
+
+    }
+
+
 }

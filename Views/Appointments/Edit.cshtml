@@ -2,8 +2,6 @@
 
 @{
     ViewData["Title"] = "Edit";
-    var docId = Model.DoctorID;
-    var patId = Model.PatientID;
 
 }
 
@@ -17,8 +15,8 @@
     <div class="col-md-4">
         <form method="post" asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="@docId" />
-            <input type="hidden" asp-for="@patId" />
+            <input type="hidden" asp-for="DoctorID" />
+            <input type="hidden" asp-for="PatientID" />
             <div class="form-group">
                 <label asp-for="AppointmentDay" class="control-label"></label>
                 <select asp-for="AppointmentDay" class="form-control" asp-items="@Html.GetEnumSelectList<Days>()"></select>

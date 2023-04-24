@@ -98,34 +98,23 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int DocId,int PatId, [Bind("DoctorID,PatientID,AppointmentDay,AppointmentTime,AppointmentType,MedicalHistory")] Appointment appointment)
+        public async Task<IActionResult> Edit([Bind("DoctorID,PatientID,AppointmentDay,AppointmentTime,AppointmentType,MedicalHistory")] Appointment appointment)
         {
-            //if (DocId != appointment.DoctorID || PatId != appointment.PatientID)
-            //{
-            //    return NotFound();
-            //}
+   
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    Repo.Update(DocId,PatId,appointment);
+                    Repo.Update(appointment.DoctorID,appointment.PatientID,appointment);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AppointmentExists(appointment.DoctorID))
-                    {
                         return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName", appointment.DoctorID);
-            ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName", appointment.PatientID);
+           
             return View(appointment);
         }
 
@@ -137,9 +126,10 @@ namespace Doctor_Appointment.Controllers
                 .Include(a => a.doctor)
                 .Include(a => a.patient)
                 .FirstOrDefaultAsync(m => m.DoctorID == Docid && m.PatientID==Patid);
-            if (appointment == null)
+
+            if (appointment != null)
             {
-                return NotFound();
+                Repo.Delete(appointment.DoctorID,appointment.PatientID);
             }
 
             return View(appointment);
@@ -150,10 +140,10 @@ namespace Doctor_Appointment.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int DocId, int PatId)
         {
-            if (_context.Appointments == null)
-            {
-                return Problem("Entity set 'MedcareDbContext.Appointments'  is null.");
-            }
+            //if (_context.Appointments == null)
+            //{
+            //    return Problem("Entity set 'MedcareDbContext.Appointments'  is null.");
+            //}
             var appointment = _context.Appointments.FirstOrDefault(m=>m.DoctorID== DocId && m.PatientID== PatId);
             if (appointment != null)
             {
