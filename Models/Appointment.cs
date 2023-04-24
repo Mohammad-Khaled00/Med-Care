@@ -20,12 +20,12 @@ namespace Doctor_Appointment.Models
            //[Key, Column(Order = 0)]
           [ForeignKey("Doctor")]
             public int DoctorID { get; set; }
-            public Doctor doctor { get; set; }
+            public Doctor? doctor { get; set; }
 
            //[Key, Column(Order = 1)]
            [ForeignKey("Patient")]
             public int PatientID { get; set; }
-            public Patient patient { get; set; }
+            public Patient? patient { get; set; }
 
             [EnumDataType(typeof(Days))]
             public Days AppointmentDay { get; set; }
