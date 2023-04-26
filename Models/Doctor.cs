@@ -64,25 +64,14 @@ namespace Doctor_Appointment.Models
         public int Clinic_PhonNum { get; set; }
 
         public ICollection<DailyAvailbility> availableDays { get; set; } = new HashSet<DailyAvailbility>();
-        
-/*      [Required]
-        [Range(1, 24)]
-        public int ReservationStartTime { get; set; }
-
-        [Required]
-        [Range(1, 24)]
-        public int ReservationEndTime { get; set; }*/
-
-        //[DataType(DataType.ImageUrl)]
-        //public byte[] Image { get; set; }
 
         public bool HomeExamination { get; set; }
 
         [Required]
         public int Price { get; set; }
 
-        //[Required]
-        //[Range(1, 60)]
-        //public int WatingTime { get; set; }
+        [Required]
+        [Range(1, 60)]
+        public int WatingTime { get; set; }
     }
 }

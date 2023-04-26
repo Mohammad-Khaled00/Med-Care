@@ -36,7 +36,7 @@ namespace Doctor_Appointment.Repo.Services
         {
             var del_Doc = Context.Doctors.FirstOrDefault(p => p.DoctorID == id);
             //var doc_WorkDay = Context.doctorWorkDays.FirstOrDefault(d => d.DoctorID == id && d.WorkDays == days);
-            var doc_WorkDay = Context.doctorWorkDays.FirstOrDefault(d => d.DoctorID == id);
+            //var doc_WorkDay = Context.doctorWorkDays.FirstOrDefault(d => d.DoctorID == id);
 
             del_Doc.FullName = doctor.FullName;
             del_Doc.Email = doctor.Email;
@@ -44,9 +44,7 @@ namespace Doctor_Appointment.Repo.Services
             del_Doc.Description = doctor.Description;
             del_Doc.Clinic_Location = doctor.Clinic_Location;
             del_Doc.Clinic_PhonNum = doctor.Clinic_PhonNum;
-            del_Doc.ReservationStartTime = doctor.ReservationStartTime;
-            del_Doc.ReservationEndTime = doctor.ReservationEndTime;
-            doc_WorkDay.WorkDays = workdays.WorkDays;
+            //doc_WorkDay.WorkDays = workdays.WorkDays;
             del_Doc.HomeExamination = doctor.HomeExamination;
 
             Context.Doctors.Update(del_Doc);
@@ -57,6 +55,16 @@ namespace Doctor_Appointment.Repo.Services
             var del_Doc = Context.Doctors.FirstOrDefault(p => p.DoctorID == id);
             Context.Doctors.Remove(del_Doc);
             Context.SaveChanges();
+        }
+
+        public void Insert(Doctor doctor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(int id, Doctor doctor)
+        {
+            throw new NotImplementedException();
         }
     }
 }

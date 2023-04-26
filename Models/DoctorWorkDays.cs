@@ -19,7 +19,6 @@ namespace Doctor_Appointment.Models
         public int DoctorID { get; set; }
 
 
-
         [Required]
         [EnumDataType(typeof(AvailableDays))]
         public AvailableDays WorkDays { get; set; }

@@ -33,8 +33,6 @@ namespace Doctor_Appointment.Repo.Services
         public void Update(int DocId, int PatId, Appointment appointment)
         {
             var upd_app = Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).FirstOrDefault();
-            upd_app.WorkHours = appointment.WorkHours;
-            upd_app.WorkDays = appointment.WorkDays;
             upd_app.MedicalHistory = appointment.MedicalHistory;
 
             Context.Update(upd_app);
