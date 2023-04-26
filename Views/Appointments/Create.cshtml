@@ -21,14 +21,14 @@
                 <select asp-for="PatientID" class ="form-control" asp-items="ViewBag.PatientID"></select>
             </div>
             <div class="form-group">
-                <label asp-for="AppointmentDay" class="control-label"></label>
+@*                <label asp-for="AppointmentDay" class="control-label"></label>
                 <select asp-for="AppointmentDay" class="form-control" asp-items="@Html.GetEnumSelectList<Days>()"></select>
-                <span asp-validation-for="AppointmentDay" class="text-danger"></span>
+                <span asp-validation-for="AppointmentDay" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <label asp-for="AppointmentTime" class="control-label"></label>
+@*                <label asp-for="AppointmentTime" class="control-label"></label>
                 <input asp-for="AppointmentTime" class="form-control" />
-                <span asp-validation-for="AppointmentTime" class="text-danger"></span>
+                <span asp-validation-for="AppointmentTime" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="AppointmentType" class="control-label"></label>

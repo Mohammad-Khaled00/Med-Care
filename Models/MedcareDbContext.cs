@@ -21,5 +21,10 @@ namespace Doctor_Appointment.Models
         public DbSet<Doctor> Doctors { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }
+
+        public DbSet<DoctorWorkDays> doctorWorkDays { get; set; }
+
+        public DbSet<DoctorWorkHours> doctorWorkHours { get; set; }
+
     }
 }

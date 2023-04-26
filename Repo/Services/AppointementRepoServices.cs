@@ -29,12 +29,12 @@ namespace Doctor_Appointment.Repo.Services
             Context.SaveChanges();
         }
 
+        //public void Update(int DocId, int PatId, List<int> hours, AvailableDays days, Appointment appointment, DoctorWorkHours workHours, DoctorWorkDays workdays)
         public void Update(int DocId, int PatId, Appointment appointment)
         {
             var upd_app = Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).FirstOrDefault();
-       
-            upd_app.AppointmentDay = appointment.AppointmentDay;
-            upd_app.AppointmentTime = appointment.AppointmentTime;
+            upd_app.WorkHours = appointment.WorkHours;
+            upd_app.WorkDays = appointment.WorkDays;
             upd_app.MedicalHistory = appointment.MedicalHistory;
 
             Context.Update(upd_app);

@@ -24,7 +24,7 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Doctors
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             return View(Doctor.GetAll());
         }
@@ -45,7 +45,8 @@ namespace Doctor_Appointment.Controllers
         // GET: Doctors/Create
         public IActionResult Create()
         {
-            return View();
+            DoctorWorkDays days = new();
+            return View(ViewBag.days = days);
         }
 
         // POST: Doctors/Create
@@ -53,12 +54,13 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorID,FullName,gender,Email,specialist,Degree,Description,Clinic_Location,Clinic_PhonNum,ReservationStartTime,ReservationEndTime,WorkDays,HomeExamination")] Doctor doctor)
+        ////////////////////////////////////////////////////////////////////////////////////////// Alert
+        public IActionResult Create([Bind("DoctorID,FullName,gender,Email,specialist,Degree,Description,Clinic_Location,Clinic_PhonNum,ReservationStartTime,ReservationEndTime,HomeExamination")] Doctor doctor, [Bind("workdays")] DoctorWorkDays wdays)
         {
             if (ModelState.IsValid)
             {
-               Doctor.Insert(doctor);
-               return RedirectToAction(nameof(Index));
+                Doctor.Insert(doctor, wdays);
+                return RedirectToAction(nameof(Index));
             }
             return View(doctor);
         }
@@ -71,6 +73,8 @@ namespace Doctor_Appointment.Controllers
             {
                 return NotFound();
             }
+            DoctorWorkDays days = new();
+            ViewBag.days = days;
             return View(doctor);
         }
 
@@ -79,7 +83,7 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DoctorID,FullName,gender,Email,specialist,Degree,Description,Clinic_Location,Clinic_PhonNum,ReservationStartTime,ReservationEndTime,WorkDays,Image,HomeExamination")] Doctor doctor)
+        public IActionResult Edit(int id, [Bind("DoctorID,FullName,gender,Email,specialist,Degree,Description,Clinic_Location,Clinic_PhonNum,ReservationStartTime,ReservationEndTime,HomeExamination")] Doctor doctor, [Bind("workdays")] DoctorWorkDays wdays)
         {
             if (id != doctor.DoctorID)
             {
@@ -90,18 +94,11 @@ namespace Doctor_Appointment.Controllers
             {
                 try
                 {
-                   Doctor.Update(id, doctor);
+                    Doctor.Update(id, doctor, wdays);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DoctorExists(doctor.DoctorID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }

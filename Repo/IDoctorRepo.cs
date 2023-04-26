@@ -6,8 +6,9 @@ namespace Doctor_Appointment.Repo
     {
         public List<Doctor> GetAll();
         public Doctor GetById(int id);
-        public void Insert(Doctor doctor);
-        public void Update(int id, Doctor doctor);
+        public void Insert(Doctor doctor, DoctorWorkDays workdays);
+        //public void Update(int id, AvailableDays days, Doctor doctor, DoctorWorkDays workdays);
+        public void Update(int id, Doctor doctor, DoctorWorkDays workdays);
         public void Delete(int id);
     }
 }
