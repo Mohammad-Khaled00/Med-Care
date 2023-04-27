@@ -14,21 +14,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="DoctorID" class="control-label"></label>
-                <select asp-for="DoctorID" class ="form-control" asp-items="ViewBag.DoctorID"></select>
+                <select asp-for="DoctorID" class="form-control" asp-items="ViewBag.DoctorID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PatientID" class="control-label"></label>
-                <select asp-for="PatientID" class ="form-control" asp-items="ViewBag.PatientID"></select>
+                <select asp-for="PatientID" class="form-control" asp-items="ViewBag.PatientID"></select>
             </div>
             <div class="form-group">
-@*                <label asp-for="AppointmentDay" class="control-label"></label>
-                <select asp-for="AppointmentDay" class="form-control" asp-items="@Html.GetEnumSelectList<Days>()"></select>
-                <span asp-validation-for="AppointmentDay" class="text-danger"></span>*@
+                <label asp-for="availableDays" class="control-label">Day</label>
+                <input type="date" asp-for="availableDays" class="form-control" />
+                <span asp-validation-for="availableDays" class="text-danger"></span>
             </div>
             <div class="form-group">
-@*                <label asp-for="AppointmentTime" class="control-label"></label>
-                <input asp-for="AppointmentTime" class="form-control" />
-                <span asp-validation-for="AppointmentTime" class="text-danger"></span>*@
+                <label asp-for="availableDays" class="control-label">Time</label>
+                <input type="time" asp-for="availableDays" class="form-control" />
+                <span asp-validation-for="availableDays" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AppointmentType" class="control-label"></label>
@@ -52,5 +52,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

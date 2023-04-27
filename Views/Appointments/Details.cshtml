@@ -1,7 +1,8 @@
-﻿@model Doctor_Appointment.Models.Appointment
+﻿@model Doctor_Appointment.Models.Appointment;
 
 @{
     ViewData["Title"] = "Details";
+
 }
 
 <h1>Details</h1>
@@ -22,18 +23,18 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.patient.Email)
         </dd>
-@*        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AppointmentDay)
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.availableDays)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AppointmentDay)
+            @Html.DisplayFor(model => model.availableDays)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AppointmentTime)
+            @Html.DisplayNameFor(model => model.availableDays)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AppointmentTime)
-        </dd>*@
+            @Html.DisplayFor(model => model.availableDays)
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.AppointmentType)
         </dt>

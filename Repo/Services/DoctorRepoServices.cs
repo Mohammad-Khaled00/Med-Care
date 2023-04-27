@@ -1,4 +1,5 @@
-﻿using Doctor_Appointment.Models;
+﻿using Doctor_Appointment.Data;
+using Doctor_Appointment.Models;
 
 namespace Doctor_Appointment.Repo.Services
 {
@@ -23,20 +24,17 @@ namespace Doctor_Appointment.Repo.Services
             return Context.Doctors.FirstOrDefault(d => d.DoctorID == id);
         }
 
-        public void Insert(Doctor doctor, DoctorWorkDays workdays)
+        public void Insert(Doctor doctor, DailyAvailbility daily)
         {
             Context.Add(doctor);
-            Context.Add(workdays);
+            Context.Add(daily);
             Context.SaveChanges();
         }
 
-        ///////////////////////////////////////////////////////////////////////////////////////////// Alert
-        //public void Update(int id, AvailableDays days, Doctor doctor, DoctorWorkDays workdays)
-        public void Update(int id, Doctor doctor, DoctorWorkDays workdays)
+        public void Update(int id, Doctor doctor, DailyAvailbility daily)
         {
             var del_Doc = Context.Doctors.FirstOrDefault(p => p.DoctorID == id);
-            //var doc_WorkDay = Context.doctorWorkDays.FirstOrDefault(d => d.DoctorID == id && d.WorkDays == days);
-            //var doc_WorkDay = Context.doctorWorkDays.FirstOrDefault(d => d.DoctorID == id);
+            var doc_WorkDay = Context.dailyAvailbilities.FirstOrDefault(d => d.DoctorID == id);
 
             del_Doc.FullName = doctor.FullName;
             del_Doc.Email = doctor.Email;
@@ -44,8 +42,11 @@ namespace Doctor_Appointment.Repo.Services
             del_Doc.Description = doctor.Description;
             del_Doc.Clinic_Location = doctor.Clinic_Location;
             del_Doc.Clinic_PhonNum = doctor.Clinic_PhonNum;
-            //doc_WorkDay.WorkDays = workdays.WorkDays;
             del_Doc.HomeExamination = doctor.HomeExamination;
+
+            doc_WorkDay.date = daily.date;
+            doc_WorkDay.starttime = daily.starttime;
+            doc_WorkDay.endtime = daily.endtime;
 
             Context.Doctors.Update(del_Doc);
             Context.SaveChanges();
@@ -53,18 +54,13 @@ namespace Doctor_Appointment.Repo.Services
         public void Delete(int id)
         {
             var del_Doc = Context.Doctors.FirstOrDefault(p => p.DoctorID == id);
+            var doc_WorkDay = Context.dailyAvailbilities.FirstOrDefault(d => d.DoctorID == id);
+            Context.dailyAvailbilities.Remove(doc_WorkDay);
             Context.Doctors.Remove(del_Doc);
             Context.SaveChanges();
         }
 
-        public void Insert(Doctor doctor)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void Update(int id, Doctor doctor)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }
