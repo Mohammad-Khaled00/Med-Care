@@ -1,20 +1,46 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Doctor_Appointment.Models;
+using Doctor_Appointment.Repo;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Doctor_Appointment.Controllers
 {
     public class DoctorsController : Controller
     {
+        public MedcareDbContext Context { get; }
+        public IDoctorRepo doctor { get; }
+        public IDailyAvailbilityRepo AvailbilityRepo { get; }
+
+        public DoctorsController(MedcareDbContext context , IDoctorRepo _doctor)
+        {
+            Context = context;
+            doctor = _doctor;
+        }
         // GET: DoctorsController
         public ActionResult Index()
         {
-            return View();
+            return View(doctor.GetAll());
         }
 
         // GET: DoctorsController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var check = Context.Doctors.FirstOrDefault(c=>c.DoctorID==id);
+            if(check!=null)
+            {
+
+                try
+                {
+                    return View(doctor.GetById(id));
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+
+            }
+              return NotFound();
         }
 
         // GET: DoctorsController/Create
@@ -26,10 +52,12 @@ namespace Doctor_Appointment.Controllers
         // POST: DoctorsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Doctor doc , DailyAvailbility daily)
         {
             try
             {
+                doctor.Insert(doc,daily);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

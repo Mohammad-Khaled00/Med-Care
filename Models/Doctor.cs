@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Doctor_Appointment.Models
 {
@@ -65,6 +66,8 @@ namespace Doctor_Appointment.Models
 
         public ICollection<DailyAvailbility> availableDays { get; set; } = new HashSet<DailyAvailbility>();
 
+        [NotMapped]
+        public DailyAvailbility dailyAvailbility { get; set; }
         public bool HomeExamination { get; set; }
 
         [Required]

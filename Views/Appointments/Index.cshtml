@@ -18,12 +18,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.patient)
             </th>
-@*            <th>
-                @Html.DisplayNameFor(model => model.AppointmentDay)
-            </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentTime)
-            </th>*@
+                @Html.DisplayNameFor(model => model.dailyAvailbility.date)
+            </th>
+       
             <th>
                 @Html.DisplayNameFor(model => model.AppointmentType)
             </th>
@@ -42,12 +40,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.patient.Email)
             </td>
-@*            <td>
-                @Html.DisplayFor(modelItem => item.AppointmentDay)
-            </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AppointmentTime)
-            </td>*@
+                @Html.DisplayFor(modelItem => item.dailyAvailbility.date)
+            </td>
+       
             <td>
                 @Html.DisplayFor(modelItem => item.AppointmentType)
             </td>
