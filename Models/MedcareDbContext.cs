@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Doctor_Appointment.Clients;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Xml;
 
 namespace Doctor_Appointment.Models
@@ -9,6 +11,7 @@ namespace Doctor_Appointment.Models
         {
 
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -21,5 +24,7 @@ namespace Doctor_Appointment.Models
         public DbSet<Doctor> Doctors { get; set; }
 
         public DbSet<Appointment> Appointments { get; set; }
+
+       
     }
 }

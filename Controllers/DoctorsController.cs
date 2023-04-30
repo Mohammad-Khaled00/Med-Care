@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Doctor_Appointment.Models;
 using Doctor_Appointment.Repo.Services;
 using Doctor_Appointment.Repo;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Doctor_Appointment.Controllers
 {
+    [Authorize(Roles = "Doctor")]
     public class DoctorsController : Controller
     {
         private readonly MedcareDbContext _context;

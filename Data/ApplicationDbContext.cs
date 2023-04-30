@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Doctor_Appointment.Clients;
+using Doctor_Appointment.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Doctor_Appointment.Data
@@ -9,5 +11,13 @@ namespace Doctor_Appointment.Data
             : base(options)
         {
         }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //    modelBuilder.Entity<PaypalClient>()
+        //        .HasKey(e => new {e.});
+        //}
+        //public DbSet<PaypalClient> paypals { get; set; }
     }
 }
