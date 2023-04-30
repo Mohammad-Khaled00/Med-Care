@@ -43,7 +43,7 @@ namespace Doctor_Appointment.Migrations
 
                     b.HasIndex("PatientID");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("Doctor_Appointment.Models.DailyAvailbility", b =>
@@ -81,7 +81,7 @@ namespace Doctor_Appointment.Migrations
 
                     b.HasIndex("AppointmentDoctorID", "AppointmentPatientID");
 
-                    b.ToTable("dailyAvailbilities");
+                    b.ToTable("dailyAvailbilities", (string)null);
                 });
 
             modelBuilder.Entity("Doctor_Appointment.Models.Doctor", b =>
@@ -131,7 +131,7 @@ namespace Doctor_Appointment.Migrations
 
                     b.HasKey("DoctorID");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("Doctor_Appointment.Models.Patient", b =>
@@ -165,7 +165,7 @@ namespace Doctor_Appointment.Migrations
 
                     b.HasKey("PatientID");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("Doctor_Appointment.Models.Appointment", b =>

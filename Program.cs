@@ -31,7 +31,7 @@ namespace Doctor_Appointment
             builder.Services.AddScoped<IDoctorRepo, DoctorRepoServices>();
             builder.Services.AddScoped<IPatientRepo,PatientRepoServices>();
             builder.Services.AddScoped<IAppointmentRepo, AppointementRepoServices>();
-            //builder.Services.AddScoped<IDailyAvailbilityRepo, DailyAvailbiltyRepoServices>();
+            builder.Services.AddScoped<IDailyAvailbilityRepo, DailyAvailbiltyRepoServices>();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));

@@ -11,8 +11,8 @@ namespace Doctor_Appointment.Models
 
     public enum Spectialist
     {
-        Dentists,
         Neurology,
+        Dentists,
         Ophthalmology,
         Orthopedics,
         Cancer_Department,
@@ -65,7 +65,7 @@ namespace Doctor_Appointment.Models
         public int Clinic_PhonNum { get; set; }
 
         public ICollection<DailyAvailbility> availableDays { get; set; } = new HashSet<DailyAvailbility>();
-
+      
         [NotMapped]
         public DailyAvailbility dailyAvailbility { get; set; }
         public bool HomeExamination { get; set; }
@@ -76,5 +76,11 @@ namespace Doctor_Appointment.Models
         [Required]
         [Range(1, 60)]
         public int WatingTime { get; set; }
+
+        public override string ToString()
+        {
+            return $"{specialist}";
+       
+        }
     }
 }

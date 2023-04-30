@@ -76,7 +76,24 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.dailyAvailbility.endtime)
         </dd>
-   
+
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.WatingTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.WatingTime)
+        </dd>
+
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.HomeExamination)
         </dt>
@@ -86,6 +103,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.DoctorID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Create" asp-controller="Appointments" asp-route-id="DoctorID">Book</a> |
+    <a asp-controller="Home" asp-action="SpecialistFilter">Back to List</a>
 </div>

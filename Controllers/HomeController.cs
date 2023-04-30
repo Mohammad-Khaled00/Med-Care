@@ -1,6 +1,9 @@
 ﻿using Doctor_Appointment.Models;
+using Doctor_Appointment.Repo;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using System.Numerics;
 
 namespace Doctor_Appointment.Controllers
 {
@@ -8,9 +11,15 @@ namespace Doctor_Appointment.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public MedcareDbContext Context { get; }
+        public IDoctorRepo DoctorRepo { get; }
+
+
+        public HomeController(ILogger<HomeController> logger , MedcareDbContext context, IDoctorRepo doctorRepo)
         {
             _logger = logger;
+            Context = context;
+            DoctorRepo = doctorRepo;
         }
 
         public IActionResult Index()
@@ -28,5 +37,32 @@ namespace Doctor_Appointment.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        [HttpGet]
+        public ActionResult SpecialistFilter()
+        {
+            ViewBag.Spectialist = Context.Doctors.ToList();
+
+            return View(DoctorRepo.GetAll());
+        }
+
+        [HttpPost]
+        public ActionResult SpecialistFilter(Spectialist spl)
+        {
+            ViewBag.Spectialist = Context.Doctors.ToList();
+
+            if ((Context.Doctors.Any(s => s.specialist == spl)))
+            {
+                List<Doctor> spldoc = DoctorRepo.GetBySpecialist(spl);
+                
+                return View(spldoc);
+
+            }
+            return View();
+
+        }
+
+
     }
 }

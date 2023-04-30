@@ -19,7 +19,7 @@ namespace Doctor_Appointment.Controllers
 
         // GET: DailyAvailbilityControllr
         public ActionResult Index()
-        {
+       {
             try
             {
                 Daily.GetAll();

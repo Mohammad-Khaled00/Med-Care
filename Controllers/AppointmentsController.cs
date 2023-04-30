@@ -23,30 +23,42 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Appointments
+
         public async Task<IActionResult> Index()
         {
-            var medcareDbContext = _context.Appointments.Include(a => a.doctor).Include(a => a.patient);
-            return View(await medcareDbContext.ToListAsync());
+      
+                return View(Repo.GetAll());
+         
         }
+        //public async Task<IActionResult> Index(int PatId)
+        //{
+        //    var check = _context.Appointments.Where(p => p.PatientID==PatId);
+        //    if (check!=null)
+        //    {
+        //        return View(Repo.GetAll(PatId));
+        //    }
+        //    else
+        //        return NotFound();
+        //}
 
         // GET: Appointments/Details/5
-        public async Task<IActionResult> Details(int DocId , int PatId)
+        public IActionResult Details(int PatId)
         {
-            if (DocId == null || PatId == null || _context.Appointments == null)
+            if (PatId == null || _context.Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = await _context.Appointments
+            var appointment =  _context.Appointments
                 .Include(a => a.doctor)
                 .Include(a => a.patient)
-                .FirstOrDefaultAsync(m => m.DoctorID == DocId && m.PatientID==PatId);
+                .Where(m => m.PatientID==PatId);
             if (appointment == null)
             {
                 return NotFound();
             }
 
-            return View(Repo.GetById(DocId,PatId));
+            return View(Repo.GetById(PatId));
         }
 
         // GET: Appointments/Create
@@ -68,7 +80,7 @@ namespace Doctor_Appointment.Controllers
             {
                 _context.Add(appointment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details");
             }
             ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName", appointment.DoctorID);
             ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName", appointment.PatientID);

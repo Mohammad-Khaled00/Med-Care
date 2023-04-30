@@ -19,15 +19,15 @@ namespace Doctor_Appointment.Repo.Services
 
         }
 
-        public Doctor GetById(int id)
+        public Doctor GetById(int id )
         {
             return Context.Doctors.FirstOrDefault(d => d.DoctorID == id);
         }
 
-        public void Insert(Doctor doctor, DailyAvailbility daily)
+        public void Insert(Doctor doctor )
         {
             Context.Add(doctor);
-            Context.Add(daily);
+            //Context.Add(daily);
             Context.SaveChanges();
         }
 
@@ -43,6 +43,8 @@ namespace Doctor_Appointment.Repo.Services
             del_Doc.Clinic_Location = doctor.Clinic_Location;
             del_Doc.Clinic_PhonNum = doctor.Clinic_PhonNum;
             del_Doc.HomeExamination = doctor.HomeExamination;
+            del_Doc.Price= doctor.Price;
+            del_Doc.WatingTime= doctor.WatingTime;
 
             doc_WorkDay.date = daily.date;
             doc_WorkDay.starttime = daily.starttime;
@@ -61,6 +63,11 @@ namespace Doctor_Appointment.Repo.Services
         }
 
 
-
+        //specialist filter
+        public List<Doctor> GetBySpecialist(Spectialist spl)
+        {
+            var docSpl = Context.Doctors.Where(s => s.specialist == spl).ToList();
+            return docSpl;
+        }
     }
 }

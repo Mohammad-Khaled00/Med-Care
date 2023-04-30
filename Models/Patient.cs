@@ -33,6 +33,8 @@ namespace Doctor_Appointment.Models
 
             public string Address { get; set; }
 
+        public Appointment? appointment { get; set; }
+
 
         }
     }

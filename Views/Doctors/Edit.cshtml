@@ -70,6 +70,19 @@
                 <input type="time" asp-for="dailyAvailbility.endtime" class="form-control" />
                 <span asp-validation-for="dailyAvailbility.endtime" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input type="text" asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+        <div class="form-group">
+            <label asp-for="WatingTime" class="control-label">Waiting Time</label>
+            <input type="text" asp-for="WatingTime" class="form-control" />
+            <span asp-validation-for="WatingTime" class="text-danger"></span>
+        </div>
+
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="HomeExamination" /> @Html.DisplayNameFor(model => model.HomeExamination)

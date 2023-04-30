@@ -25,5 +25,6 @@ namespace Doctor_Appointment.Models
         public DbSet<DailyAvailbility> dailyAvailbilities { get; set; }
 
 
+
     }
 }

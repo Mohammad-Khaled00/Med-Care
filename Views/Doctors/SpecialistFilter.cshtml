@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Doctor_Appointment.Models.Doctor>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "SpecialistFilter";
 }
 
-<h1>Index</h1>
-zz
+<h1>SpecialistFilter</h1>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -37,32 +37,19 @@ zz
                 @Html.DisplayNameFor(model => model.Clinic_PhonNum)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dailyAvailbility.date)
-            </th>
-              <th>
-                @Html.DisplayNameFor(model => model.dailyAvailbility.starttime)
+                @Html.DisplayNameFor(model => model.HomeExamination)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dailyAvailbility.endtime)
-            </th>
-
-             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.WatingTime)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.HomeExamination)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model)
-{
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
@@ -89,24 +76,13 @@ zz
                 @Html.DisplayFor(modelItem => item.Clinic_PhonNum)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.dailyAvailbility.date)
+                @Html.DisplayFor(modelItem => item.HomeExamination)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.dailyAvailbility.starttime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.dailyAvailbility.endtime)
-                </td>
-
-                <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.WatingTime)
-                </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HomeExamination)
+                @Html.DisplayFor(modelItem => item.WatingTime)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.DoctorID">Edit</a> |

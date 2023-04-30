@@ -6,7 +6,8 @@ namespace Doctor_Appointment.Repo
     {
         public List<Doctor> GetAll();
         public Doctor GetById(int id);
-        public void Insert(Doctor doctor, DailyAvailbility daily);
+        public List<Doctor> GetBySpecialist(Spectialist spl);
+        public void Insert(Doctor doctor);
         public void Update(int id, Doctor doctor, DailyAvailbility daily);
         public void Delete(int id);
     }

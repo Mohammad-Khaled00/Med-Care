@@ -45,6 +45,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-DocId="@Model.DoctorID" asp-route-PatId="@Model.PatientID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @*<a asp-action="Edit" asp-route-PatId="@Model.PatientID" asp-route-PatId="@Model.DoctorID">>Edit</a> |*@
+    <a asp-controller="Home" asp-action="SpecialistFilter">Back to Doctors List</a>
 </div>

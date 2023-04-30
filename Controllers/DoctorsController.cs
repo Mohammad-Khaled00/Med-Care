@@ -29,7 +29,6 @@ namespace Doctor_Appointment.Controllers
             var check = Context.Doctors.FirstOrDefault(c=>c.DoctorID==id);
             if(check!=null)
             {
-
                 try
                 {
                     return View(doctor.GetById(id));
@@ -43,6 +42,7 @@ namespace Doctor_Appointment.Controllers
               return NotFound();
         }
 
+       
         // GET: DoctorsController/Create
         public ActionResult Create()
         {
@@ -52,11 +52,11 @@ namespace Doctor_Appointment.Controllers
         // POST: DoctorsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Doctor doc , DailyAvailbility daily)
+        public ActionResult Create(Doctor doc )
         {
             try
             {
-                doctor.Insert(doc,daily);
+                doctor.Insert(doc);
 
                 return RedirectToAction(nameof(Index));
             }

@@ -11,14 +11,20 @@ namespace Doctor_Appointment.Repo.Services
             Context = context;
         }
 
+
         public List<Appointment> GetAll()
         {
-           return Context.Appointments.ToList();
+            return Context.Appointments.ToList();
         }
 
-        public Appointment GetById(int DocId , int PatId)
+        //public List<Appointment> GetAll(int PatId)
+        //{
+        //   return Context.Appointments.Where(a => a.PatientID==PatId).ToList();
+        //}
+
+        public Appointment GetById( int PatId)
         {
-            return Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).FirstOrDefault();
+            return Context.Appointments.Where(d => d.PatientID == PatId).FirstOrDefault();
 
             
         }

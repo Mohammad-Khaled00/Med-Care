@@ -1,25 +1,29 @@
 ﻿@model IEnumerable<Doctor_Appointment.Models.Doctor>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "AllDoc";
 }
 
-<h1>Index</h1>
-zz
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>AllDoc</h1>
+
+
+<form method="post" asp-controller="Doctors" action="SpecialistFilter">
+ <select name="filterDoc">
+    @foreach(var spl in Model)
+    {
+            <option value="@spl.specialist">@spl.ToString()</option>
+    }
+    </select>
+    <input type="submit" value="Search"/>
+</form>
+
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.specialist)
@@ -37,42 +41,25 @@ zz
                 @Html.DisplayNameFor(model => model.Clinic_PhonNum)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dailyAvailbility.date)
-            </th>
-              <th>
-                @Html.DisplayNameFor(model => model.dailyAvailbility.starttime)
+                @Html.DisplayNameFor(model => model.HomeExamination)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.dailyAvailbility.endtime)
-            </th>
-
-             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.WatingTime)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.HomeExamination)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model)
+@foreach (var item in Model) 
 {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.specialist)
             </td>
@@ -89,29 +76,17 @@ zz
                 @Html.DisplayFor(modelItem => item.Clinic_PhonNum)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.dailyAvailbility.date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dailyAvailbility.starttime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.dailyAvailbility.endtime)
-                </td>
-
-                <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.WatingTime)
-                </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.HomeExamination)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.DoctorID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DoctorID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DoctorID">Delete</a>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WatingTime)
+            </td>
+            <td>
+                <a asp-action="Create" asp-controller="Appointments" asp-route-id="@item.DoctorID">Book</a> |
+                <a asp-action="Details" asp-controller="Doctors" asp-route-id="@item.DoctorID">Details</a> |
             </td>
         </tr>
 }
