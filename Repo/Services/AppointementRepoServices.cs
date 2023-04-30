@@ -1,12 +1,14 @@
-﻿using Doctor_Appointment.Models;
+﻿using Doctor_Appointment.Data;
+using Doctor_Appointment.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Doctor_Appointment.Repo.Services
 {
     public class AppointementRepoServices : IAppointmentRepo
     {
-        public MedcareDbContext Context { get; }
+        public ApplicationDbContext Context { get; }
 
-        public AppointementRepoServices(MedcareDbContext context)
+        public AppointementRepoServices(ApplicationDbContext context)
         {
             Context = context;
         }
@@ -14,7 +16,8 @@ namespace Doctor_Appointment.Repo.Services
 
         public List<Appointment> GetAll()
         {
-            return Context.Appointments.ToList();
+            return Context.Appointments.Include(d => d.doctor)
+                .Include(p => p.patient).ToList();
         }
 
         //public List<Appointment> GetAll(int PatId)
@@ -22,11 +25,12 @@ namespace Doctor_Appointment.Repo.Services
         //   return Context.Appointments.Where(a => a.PatientID==PatId).ToList();
         //}
 
-        public Appointment GetById( int PatId)
+        public Appointment GetById( int Id)
         {
-            return Context.Appointments.Where(d => d.PatientID == PatId).FirstOrDefault();
-
-            
+            return Context.Appointments.Where(d => d.appointmentID==Id)
+                .Include(d => d.doctor)
+                .Include(p => p.patient)
+                .Include(da=>da.availableDays).FirstOrDefault();
         }
 
         public void Insert(Appointment appointment)
@@ -35,7 +39,6 @@ namespace Doctor_Appointment.Repo.Services
             Context.SaveChanges();
         }
 
-        //public void Update(int DocId, int PatId, List<int> hours, AvailableDays days, Appointment appointment, DoctorWorkHours workHours, DoctorWorkDays workdays)
         public void Update(int DocId, int PatId, Appointment appointment)
         {
             var upd_app = Context.Appointments.Where(d => d.DoctorID == DocId && d.PatientID == PatId).FirstOrDefault();

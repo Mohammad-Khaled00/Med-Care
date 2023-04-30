@@ -17,7 +17,7 @@ namespace Doctor_Appointment
             // Add services to the container.
 
             var connection2 = builder.Configuration.GetConnectionString("myconn");
-            builder.Services.AddDbContext<MedcareDbContext>(op =>
+            builder.Services.AddDbContext<ApplicationDbContext>(op =>
              op.UseSqlServer(connection2));
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");

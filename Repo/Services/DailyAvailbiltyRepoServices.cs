@@ -5,8 +5,8 @@ namespace Doctor_Appointment.Repo.Services
 {
     public class DailyAvailbiltyRepoServices : IDailyAvailbilityRepo
     {
-        public MedcareDbContext Context { get; }
-        public DailyAvailbiltyRepoServices(MedcareDbContext context)
+        public ApplicationDbContext Context { get; }
+        public DailyAvailbiltyRepoServices(ApplicationDbContext context)
         {
             Context = context;
         }
@@ -38,7 +38,7 @@ namespace Doctor_Appointment.Repo.Services
             upd_daily.date = dailyAvailbility.date;
             upd_daily.starttime = dailyAvailbility.starttime;
             upd_daily.endtime = dailyAvailbility.endtime;
-            upd_daily.isavailable = dailyAvailbility.isavailable;
+            upd_daily.Isavailable = dailyAvailbility.Isavailable;
 
             Context.dailyAvailbilities.Update(upd_daily);
         }

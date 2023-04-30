@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Doctor_Appointment.Models
 {
-    //[PrimaryKey(nameof(DoctorID), nameof(Dayid))]
     public class DailyAvailbility
     {
         [ForeignKey("Doctor")]
@@ -19,7 +18,7 @@ namespace Doctor_Appointment.Models
 
         public TimeSpan endtime { get; set; }
 
-        public bool isavailable { get; set; }
+        public bool Isavailable { get; set; }
 
     }
 }

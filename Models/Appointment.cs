@@ -6,11 +6,10 @@ namespace Doctor_Appointment.Models
 {
     public enum AppointmentType
     {
-        ClinicalExaminiation,
+        ClinicalExaminiation=1,
         HomeExamination
     }
 
-    //[PrimaryKey(nameof(DoctorID), nameof(PatientID))]
     public class Appointment
     {
         [Key]

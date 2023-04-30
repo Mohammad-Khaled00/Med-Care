@@ -5,13 +5,13 @@ namespace Doctor_Appointment.Models
 {
     public enum Gender
     {
-        Female,
+        Female=1,
         Male
     }
 
     public enum Spectialist
     {
-        Neurology,
+        Neurology=1,
         Dentists,
         Ophthalmology,
         Orthopedics,
@@ -23,7 +23,7 @@ namespace Doctor_Appointment.Models
 
     public enum MedicalDegree
     {
-        specialist,
+        specialist = 1,
 
         Advisor,
 
@@ -55,7 +55,7 @@ namespace Doctor_Appointment.Models
         [EnumDataType(typeof(MedicalDegree))]
         public MedicalDegree Degree { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         public string Clinic_Location { get; set; }
@@ -72,10 +72,8 @@ namespace Doctor_Appointment.Models
 
         [Required]
         public int Price { get; set; }
-
-        [Required]
-        [Range(1, 60)]
-        public int WatingTime { get; set; }
+        
+        public string? WatingTime { get; set; }
 
         public override string ToString()
         {

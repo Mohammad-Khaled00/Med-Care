@@ -5,29 +5,41 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Doctor_Appointment.Data;
+using Doctor_Appointment.Repo;
 using Doctor_Appointment.Models;
 
 namespace Doctor_Appointment.Controllers
 {
     public class DailyAvailbilitiesController : Controller
     {
-        private readonly MedcareDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public DailyAvailbilitiesController(MedcareDbContext context)
+        public IDailyAvailbilityRepo Daily { get; }
+
+        public DailyAvailbilitiesController(ApplicationDbContext context , IDailyAvailbilityRepo daily)
         {
             _context = context;
+            Daily = daily;
         }
 
         // GET: DailyAvailbilities
         public async Task<IActionResult> Index()
         {
-              return _context.dailyAvailbilities != null ? 
-                          View(await _context.dailyAvailbilities.ToListAsync()) :
-                          Problem("Entity set 'MedcareDbContext.dailyAvailbilities'  is null.");
+            try
+            {
+                return View(Daily.GetAll());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return View();
         }
 
         // GET: DailyAvailbilities/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.dailyAvailbilities == null)
             {
@@ -41,12 +53,13 @@ namespace Doctor_Appointment.Controllers
                 return NotFound();
             }
 
-            return View(dailyAvailbility);
+            return View(Daily.GetById(id));
         }
 
         // GET: DailyAvailbilities/Create
         public IActionResult Create()
         {
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName");
             return View();
         }
 
@@ -55,7 +68,7 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorID,Dayid,date,starttime,endtime,isavailable")] DailyAvailbility dailyAvailbility)
+        public async Task<IActionResult> Create([Bind("DoctorID,Dayid,date,starttime,endtime,Isavailable")] DailyAvailbility dailyAvailbility)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +100,7 @@ namespace Doctor_Appointment.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DoctorID,Dayid,date,starttime,endtime,isavailable")] DailyAvailbility dailyAvailbility)
+        public async Task<IActionResult> Edit(int id, [Bind("DoctorID,Dayid,date,starttime,endtime,Isavailable")] DailyAvailbility dailyAvailbility)
         {
             if (id != dailyAvailbility.Dayid)
             {

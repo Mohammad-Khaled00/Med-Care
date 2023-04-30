@@ -1,12 +1,13 @@
-﻿using Doctor_Appointment.Models;
+﻿using Doctor_Appointment.Data;
+using Doctor_Appointment.Models;
 
 namespace Doctor_Appointment.Repo.Services
 {
     public class PatientRepoServices : IPatientRepo
     {
-        public MedcareDbContext Context { get; }
+        public ApplicationDbContext Context { get; }
 
-        public PatientRepoServices(MedcareDbContext context)
+        public PatientRepoServices(ApplicationDbContext context)
         {
             Context = context;
         }

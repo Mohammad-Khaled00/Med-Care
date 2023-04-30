@@ -35,10 +35,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.doctor.Clinic_Location)
+                @Html.DisplayFor(modelItem => item.doctor.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.patient.Email)
+                @Html.DisplayFor(modelItem => item.patient.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.dailyAvailbility.date)
@@ -51,9 +51,9 @@
                 @Html.DisplayFor(modelItem => item.MedicalHistory)
             </td>
             <td>
-                    <a asp-action="Edit" asp-route-DocId="@item.DoctorID" asp-route-PatId="@item.PatientID" >Edit</a> |
-                    <a asp-action="Details" asp-route-DocId="@item.DoctorID" asp-route-PatId="@item.PatientID">Details</a> |
-                    <a asp-action="Delete" asp-route-DocId="@item.DoctorID" asp-route-PatId="@item.PatientID">Delete</a>
+                    <a asp-action="Edit"    asp-route-id="@item.appointmentID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.appointmentID">Details</a> |
+                    <a asp-action="Delete"  asp-route-id="@item.appointmentID">Delete</a>
             </td>
         </tr>
 }

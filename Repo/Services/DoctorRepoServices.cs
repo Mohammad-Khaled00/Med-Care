@@ -5,9 +5,9 @@ namespace Doctor_Appointment.Repo.Services
 {
     public class DoctorRepoServices : IDoctorRepo
     {
-        public MedcareDbContext Context { get; }
+        public ApplicationDbContext Context { get; }
 
-        public DoctorRepoServices(MedcareDbContext context)
+        public DoctorRepoServices(ApplicationDbContext context)
         {
             Context = context;
         }

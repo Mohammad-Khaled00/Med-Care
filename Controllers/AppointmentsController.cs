@@ -5,18 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Doctor_Appointment.Models;
+using Doctor_Appointment.Data;
 using Doctor_Appointment.Repo;
+using Doctor_Appointment.Models;
 
 namespace Doctor_Appointment.Controllers
 {
     public class AppointmentsController : Controller
     {
-        private readonly MedcareDbContext _context;
+        private readonly ApplicationDbContext _context;
 
         public IAppointmentRepo Repo { get; }
 
-        public AppointmentsController(MedcareDbContext context, IAppointmentRepo repo)
+        public AppointmentsController(ApplicationDbContext context, IAppointmentRepo repo)
         {
             _context = context;
             Repo = repo;
@@ -42,9 +43,9 @@ namespace Doctor_Appointment.Controllers
         //}
 
         // GET: Appointments/Details/5
-        public IActionResult Details(int PatId)
+        public IActionResult Details(int id)
         {
-            if (PatId == null || _context.Appointments == null)
+            if (_context.Appointments == null)
             {
                 return NotFound();
             }
@@ -52,13 +53,13 @@ namespace Doctor_Appointment.Controllers
             var appointment =  _context.Appointments
                 .Include(a => a.doctor)
                 .Include(a => a.patient)
-                .Where(m => m.PatientID==PatId);
+                .Where(m => m.appointmentID==id);
             if (appointment == null)
             {
                 return NotFound();
             }
 
-            return View(Repo.GetById(PatId));
+            return View(Repo.GetById(id));
         }
 
         // GET: Appointments/Create
@@ -90,6 +91,7 @@ namespace Doctor_Appointment.Controllers
         // GET: Appointments/Edit/5
         public IActionResult Edit(int DocId , int PatId)
         {
+            ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
             if (DocId == null || PatId ==null || _context.Appointments == null)
             {
                 return NotFound();

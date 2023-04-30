@@ -1,4 +1,5 @@
-﻿using Doctor_Appointment.Models;
+﻿using Doctor_Appointment.Data;
+using Doctor_Appointment.Models;
 using Doctor_Appointment.Repo;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,11 +12,11 @@ namespace Doctor_Appointment.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public MedcareDbContext Context { get; }
+        public ApplicationDbContext Context { get; }
         public IDoctorRepo DoctorRepo { get; }
 
 
-        public HomeController(ILogger<HomeController> logger , MedcareDbContext context, IDoctorRepo doctorRepo)
+        public HomeController(ILogger<HomeController> logger , ApplicationDbContext context, IDoctorRepo doctorRepo)
         {
             _logger = logger;
             Context = context;

@@ -1,4 +1,5 @@
-﻿using Doctor_Appointment.Models;
+﻿using Doctor_Appointment.Data;
+using Doctor_Appointment.Models;
 using Doctor_Appointment.Repo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +9,11 @@ namespace Doctor_Appointment.Controllers
 {
     public class DoctorsController : Controller
     {
-        public MedcareDbContext Context { get; }
+        public ApplicationDbContext Context { get; }
         public IDoctorRepo doctor { get; }
         public IDailyAvailbilityRepo AvailbilityRepo { get; }
 
-        public DoctorsController(MedcareDbContext context , IDoctorRepo _doctor)
+        public DoctorsController(ApplicationDbContext context , IDoctorRepo _doctor)
         {
             Context = context;
             doctor = _doctor;
@@ -58,7 +59,7 @@ namespace Doctor_Appointment.Controllers
             {
                 doctor.Insert(doc);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "DailyAvailbilities");
             }
             catch
             {

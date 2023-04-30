@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Doctor_Appointment.Models;
+using Doctor_Appointment.Data;
 using Doctor_Appointment.Repo;
+using Doctor_Appointment.Models;
 
 namespace Doctor_Appointment.Controllers
 {
     public class PatientsController : Controller
     {
-        private readonly MedcareDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public PatientsController(MedcareDbContext context)
+        public PatientsController(ApplicationDbContext context)
         {
             _context = context;
         }

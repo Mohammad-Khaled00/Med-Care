@@ -2,10 +2,13 @@
 
 namespace Doctor_Appointment.Models
 {
-    public class DoctorViewMode
+    public class DoctorViewModel
     {
         public Doctor doctor { get; set; }
+       
         public List<DailyAvailbility> dailyAvailbilities  { get; set; }
+
+        public Appointment appointment { get; set; }
    
     }
 }
