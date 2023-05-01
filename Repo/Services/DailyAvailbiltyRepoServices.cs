@@ -13,9 +13,14 @@ namespace Doctor_Appointment.Repo.Services
 
 
 
-        public List<DailyAvailbility> GetAll()
+        //public List<DailyAvailbility> GetAll()
+        //{
+        //    return Context.dailyAvailbilities.ToList();
+        //}
+
+        public List<DailyAvailbility> GetAll(int docid)
         {
-            return Context.dailyAvailbilities.ToList();
+            return Context.dailyAvailbilities.Where(d => d.DoctorID == docid).ToList();
         }
 
         public DailyAvailbility GetById(int id)

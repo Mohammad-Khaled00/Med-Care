@@ -46,8 +46,7 @@ namespace Doctor_Appointment.Migrations
 
                     b.HasIndex("DoctorID");
 
-                    b.HasIndex("PatientID")
-                        .IsUnique();
+                    b.HasIndex("PatientID");
 
                     b.ToTable("Appointments");
                 });
@@ -381,8 +380,8 @@ namespace Doctor_Appointment.Migrations
                         .IsRequired();
 
                     b.HasOne("Doctor_Appointment.Models.Patient", "patient")
-                        .WithOne("appointment")
-                        .HasForeignKey("Doctor_Appointment.Models.Appointment", "PatientID")
+                        .WithMany()
+                        .HasForeignKey("PatientID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -463,11 +462,6 @@ namespace Doctor_Appointment.Migrations
             modelBuilder.Entity("Doctor_Appointment.Models.Doctor", b =>
                 {
                     b.Navigation("availableDays");
-                });
-
-            modelBuilder.Entity("Doctor_Appointment.Models.Patient", b =>
-                {
-                    b.Navigation("appointment");
                 });
 #pragma warning restore 612, 618
         }

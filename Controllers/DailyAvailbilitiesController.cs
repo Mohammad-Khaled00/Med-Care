@@ -24,11 +24,12 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: DailyAvailbilities
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int docid)
         {
             try
             {
-                return View(Daily.GetAll());
+                //return View(Daily.GetAll());
+                return View(Daily.GetAll(docid));
             }
             catch (Exception ex)
             {
@@ -80,9 +81,13 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: DailyAvailbilities/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.dailyAvailbilities == null)
+            //ViewBag.DoctorID = _context.Doctors.Where(d=>d.DoctorID==id).Select(d=>d.FullName).ToString();
+
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName");
+
+            if ( _context.dailyAvailbilities == null)
             {
                 return NotFound();
             }

@@ -19,6 +19,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="appointment.DoctorID" />
             <input type="hidden" asp-for="appointment.PatientID" />
+            <input type="hidden" asp-for="appointment.appointmentID" />
+
             <div class="form-group">
                 <label asp-for="dailyAvailbilities[@day].date" class="control-label">Day</label>
                 <input type="date" asp-for="dailyAvailbilities[@day].date" class="form-control" />

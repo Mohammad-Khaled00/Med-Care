@@ -37,9 +37,9 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Patients/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Patients == null)
+            if (_context.Patients == null)
             {
                 return NotFound();
             }
@@ -51,7 +51,7 @@ namespace Doctor_Appointment.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("Details","Appointments");
+            return View();
         }
 
         // GET: Patients/Create
@@ -71,7 +71,7 @@ namespace Doctor_Appointment.Controllers
             {
                 _context.Add(patient);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("SpecialistFilter","Home");
             }
             return View(patient);
         }

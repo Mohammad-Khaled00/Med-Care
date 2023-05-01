@@ -4,9 +4,11 @@ using Doctor_Appointment.Repo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Doctor_Appointment.Controllers
 {
+    [Authorize(Roles = "Doctor")]
     public class DoctorsController : Controller
     {
         public ApplicationDbContext Context { get; }
@@ -32,7 +34,7 @@ namespace Doctor_Appointment.Controllers
             {
                 try
                 {
-                    return View(doctor.GetById(id));
+                    return View();
                 }
                 catch(Exception ex)
                 {
@@ -76,10 +78,11 @@ namespace Doctor_Appointment.Controllers
         // POST: DoctorsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Doctor doc , DailyAvailbility dail)
         {
             try
             {
+                doctor.Update(id,doc, dail);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -101,6 +104,7 @@ namespace Doctor_Appointment.Controllers
         {
             try
             {
+                doctor.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

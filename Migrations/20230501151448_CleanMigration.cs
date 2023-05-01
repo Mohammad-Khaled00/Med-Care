@@ -262,8 +262,7 @@ namespace Doctor_Appointment.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_PatientID",
                 table: "Appointments",
-                column: "PatientID",
-                unique: true);
+                column: "PatientID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

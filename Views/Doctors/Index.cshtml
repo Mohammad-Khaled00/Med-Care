@@ -109,7 +109,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.DoctorID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DoctorID">Details</a> |
+                <a asp-action="Index" asp-controller="DailyAvailbilities" asp-route-docid="@item.DoctorID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.DoctorID">Delete</a>
             </td>
         </tr>

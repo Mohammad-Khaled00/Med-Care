@@ -25,22 +25,14 @@ namespace Doctor_Appointment.Controllers
 
         // GET: Appointments
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int AppId)
         {
-      
-                return View(Repo.GetAll());
+
+            ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
+
+            return View(Repo.GetAll(AppId));
          
         }
-        //public async Task<IActionResult> Index(int PatId)
-        //{
-        //    var check = _context.Appointments.Where(p => p.PatientID==PatId);
-        //    if (check!=null)
-        //    {
-        //        return View(Repo.GetAll(PatId));
-        //    }
-        //    else
-        //        return NotFound();
-        //}
 
         // GET: Appointments/Details/5
         public IActionResult Details(int id)
@@ -77,34 +69,42 @@ namespace Doctor_Appointment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DoctorID,PatientID,AppointmentDay,AppointmentTime,AppointmentType,MedicalHistory")] Appointment appointment)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                _context.Add(appointment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Details");
+
+            try
+            {
+                Repo.Insert(appointment);
             }
-            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName", appointment.DoctorID);
-            ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName", appointment.PatientID);
-            return View(appointment);
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
+            }
+            }
+            //ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName", appointment.DoctorID);
+            //ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName", appointment.PatientID);
+
+            return RedirectToAction("Details");
         }
 
         // GET: Appointments/Edit/5
-        public IActionResult Edit(int DocId , int PatId)
+        public IActionResult Edit(int id)
         {
             ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
-            if (DocId == null || PatId ==null || _context.Appointments == null)
+            
+            if (_context.Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = _context.Appointments.FirstOrDefault(a => a.DoctorID==DocId && a.PatientID==PatId);
+            var appointment = _context.Appointments.FirstOrDefault(a => a.appointmentID==id);
             if (appointment == null)
             {
                 return NotFound();
             }
             //ViewBag.DoctorID = new SelectList(_context.Doctors, "DoctorID", "FullName", appointment.DoctorID);
             //ViewBag.PatientID= new SelectList(_context.Patients, "PatientID", "FullName", appointment.PatientID);
-            return View(appointment);
+            return View();
         }
 
         // POST: Appointments/Edit/5
@@ -129,12 +129,13 @@ namespace Doctor_Appointment.Controllers
                 return RedirectToAction(nameof(Index));
             }
            
-            return View(appointment);
+            return View();
         }
 
         // GET: Appointments/Delete/5
         public async Task<IActionResult> Delete(int Docid , int Patid)
         {
+            ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
 
             var appointment = await _context.Appointments
                 .Include(a => a.doctor)
@@ -146,7 +147,7 @@ namespace Doctor_Appointment.Controllers
                 Repo.Delete(appointment.DoctorID,appointment.PatientID);
             }
 
-            return View(appointment);
+            return View();
         }
 
         // POST: Appointments/Delete/5

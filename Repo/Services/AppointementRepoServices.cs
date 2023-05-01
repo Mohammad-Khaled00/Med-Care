@@ -14,16 +14,12 @@ namespace Doctor_Appointment.Repo.Services
         }
 
 
-        public List<Appointment> GetAll()
+        public List<Appointment> GetAll(int AppId)
         {
             return Context.Appointments.Include(d => d.doctor)
-                .Include(p => p.patient).ToList();
+                .Include(p => p.patient).Where(d=>d.PatientID==AppId).ToList();
         }
 
-        //public List<Appointment> GetAll(int PatId)
-        //{
-        //   return Context.Appointments.Where(a => a.PatientID==PatId).ToList();
-        //}
 
         public Appointment GetById( int Id)
         {
