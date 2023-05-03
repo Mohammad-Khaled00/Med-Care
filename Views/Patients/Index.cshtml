@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<div class="px-5">
 <h1>Index</h1>
 
 <p>
@@ -56,7 +56,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PatientID">Edit</a> |
-                    <a asp-action="Index" asp-controller="Appointments" asp-route-patId="@item.PatientID">Details</a> |
+                <a asp-action="Index" asp-controller="Appointments" asp-route-patId="@item.PatientID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.PatientID">Delete</a>
 
             </td>
@@ -64,3 +64,4 @@
 }
     </tbody>
 </table>
+</div>

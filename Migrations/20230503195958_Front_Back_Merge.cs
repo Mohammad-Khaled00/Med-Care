@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Doctor_Appointment.Migrations
 {
     /// <inheritdoc />
-    public partial class CleanCode : Migration
+    public partial class Front_Back_Merge : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

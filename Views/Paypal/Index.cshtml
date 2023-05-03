@@ -1,6 +1,9 @@
 ﻿<div class="text-center">
     <div id="paypal-button-container"></div>
 </div>
+<div class="text-center">
+<a class="btn btn-main btn-round-full" asp-controller="Appointments" asp-action="Details">PayOnSite<i class="icofont-simple-right ml-2"></i></a>
+</div>
 
 @section Scripts {
     @*Use ViewBag.ClientId to load Paypal Javascript SDK*@
@@ -36,4 +39,5 @@
                 }
             }).render('#paypal-button-container');
         </script>
+
 }

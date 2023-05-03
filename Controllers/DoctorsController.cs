@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Doctor_Appointment.Controllers
 {
-    //[Authorize(Roles = "Doctor")]
+    [Authorize(Roles = "Doctor")]
     public class DoctorsController : Controller
     {
         public ApplicationDbContext Context { get; }

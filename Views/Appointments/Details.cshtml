@@ -4,8 +4,61 @@
     ViewData["Title"] = "Details";
 
 }
+<div class="px-5">
+<h4 style="margin-top:50px">Appointment Details</h4>
+<br />
+<table  class="table">
+    <thead>
+        <tr>
 
-<h1>Details</h1>
+            <th>
+                @Html.DisplayNameFor(model => model.patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dailyAvailbility.date)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MedicalHistory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>  @Html.DisplayFor(model => model.patient.FullName)</td>
+            <td>   @Html.DisplayFor(model => model.dailyAvailbility.date)</td>
+            <td>  @Html.DisplayFor(model => model.AppointmentType)</td>
+            <td>   @Html.DisplayFor(model => model.MedicalHistory)</td>
+        </tr>
+    </tbody>
+</table>
+
+<section class="section confirmation">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+          <div class="confirmation-content text-center">
+             
+            <i class="icofont-check-circled text-lg text-color-2"></i>
+                
+              <h2 class="mt-3 mb-4">Thank you for your appoinment</h2>
+                 
+                  
+              <p>We will contact with you soon.</p>
+              <br />
+                    <a class="btn btn-main btn-round-full" asp-controller="Home" asp-action="Index">Out<i class="icofont-simple-right ml-2"></i></a>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+@*<h1>Details</h1>
 
 <div>
     <h4>Appointment</h4>
@@ -45,6 +98,6 @@
     </dl>
 </div>
 <div>
-    @*<a asp-action="Edit" asp-route-id="@Model.appointmentID">Edit</a> |*@
+    <a asp-action="Edit" asp-route-id="@Model.appointmentID">Edit</a> |
     <a asp-controller="Home" asp-action="SpecialistFilter">Back to Doctors List</a>
-</div>
+</div>*@

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Doctor_Appointment.Controllers
 {
-    //[Authorize(Roles = "Patient")]
+    [Authorize(Roles = "Patient")]
 
     public class PatientsController : Controller
     {
@@ -24,6 +24,7 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: Patients
+        [Authorize]
         public async Task<IActionResult> Index()
         {
               return _context.Patients != null ? 

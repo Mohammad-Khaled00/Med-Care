@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Doctor_Appointment.Controllers
 {
-    //[Authorize(Roles ="Patient")]
+    [Authorize(Roles ="Patient")]
     public class AppointmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -27,14 +27,14 @@ namespace Doctor_Appointment.Controllers
 
         // GET: Appointments
 
-        //[Authorize]
-        public async Task<IActionResult> Index(int patId)
+        [Authorize]
+        public IActionResult Index(int patId)
         {
 
             ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
-            
+
             return View(Repo.GetAll(patId));
-         
+
         }
 
         // GET: Appointments/Details/5
