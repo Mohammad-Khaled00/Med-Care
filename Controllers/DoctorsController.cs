@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Doctor_Appointment.Controllers
 {
-    [Authorize(Roles = "Doctor")]
+    //[Authorize(Roles = "Doctor")]
     public class DoctorsController : Controller
     {
         public ApplicationDbContext Context { get; }
@@ -20,6 +20,8 @@ namespace Doctor_Appointment.Controllers
             Context = context;
             doctor = _doctor;
         }
+
+        [AllowAnonymous]
         // GET: DoctorsController
         public ActionResult Index()
         {
@@ -27,14 +29,17 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: DoctorsController/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int id)
         {
             var check = Context.Doctors.FirstOrDefault(c=>c.DoctorID==id);
+           
             if(check!=null)
             {
                 try
                 {
-                    return View();
+
+                    return View(doctor.GetById(id));
                 }
                 catch(Exception ex)
                 {
@@ -72,7 +77,13 @@ namespace Doctor_Appointment.Controllers
         // GET: DoctorsController/Edit/5
         public ActionResult Edit(int id)
         {
+            var doc=Context.Doctors.FirstOrDefault(d=>d.DoctorID==id);
+            if(doc!=null) 
+            {
+            return View(doc);
+            }
             return View();
+
         }
 
         // POST: DoctorsController/Edit/5
@@ -91,26 +102,26 @@ namespace Doctor_Appointment.Controllers
             }
         }
 
-        // GET: DoctorsController/Delete/5
-        public ActionResult Delete(int id)
+        //GET: DoctorsController/Delete/5
+        public IActionResult Delete(int id)
         {
-            return View();
+            doctor.Delete(id);
+            return RedirectToAction(nameof(Create));
         }
 
-        // POST: DoctorsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                doctor.Delete(id);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //// POST: DoctorsController/Delete/5
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        doctor.Delete(id);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

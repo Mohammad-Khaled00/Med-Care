@@ -9,6 +9,8 @@ namespace Doctor_Appointment.Models
         public List<DailyAvailbility> dailyAvailbilities  { get; set; }
 
         public Appointment appointment { get; set; }
-   
+
+        public Patient patient { get; set; }
+
     }
 }

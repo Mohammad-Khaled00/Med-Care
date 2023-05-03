@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Doctor_Appointment.Data;
 using Doctor_Appointment.Repo;
 using Doctor_Appointment.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Doctor_Appointment.Controllers
 {
+    //[Authorize (Roles ="Doctor")]
     public class DailyAvailbilitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,7 +30,7 @@ namespace Doctor_Appointment.Controllers
         {
             try
             {
-                //return View(Daily.GetAll());
+
                 return View(Daily.GetAll(docid));
             }
             catch (Exception ex)
@@ -42,19 +44,23 @@ namespace Doctor_Appointment.Controllers
         // GET: DailyAvailbilities/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.dailyAvailbilities == null)
+            ViewBag.date = _context.dailyAvailbilities.Select(a => a.Dayid);
+
+            if (_context.dailyAvailbilities == null)
             {
                 return NotFound();
             }
 
             var dailyAvailbility = await _context.dailyAvailbilities
-                .FirstOrDefaultAsync(m => m.Dayid == id);
+                .FirstOrDefaultAsync(m => m.DoctorID == id);
+
             if (dailyAvailbility == null)
             {
                 return NotFound();
             }
+            Daily.GetById(id);
 
-            return View(Daily.GetById(id));
+            return View("Details", dailyAvailbility);
         }
 
         // GET: DailyAvailbilities/Create
@@ -75,7 +81,7 @@ namespace Doctor_Appointment.Controllers
             {
                 _context.Add(dailyAvailbility);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View("Details", dailyAvailbility);
             }
             return View(dailyAvailbility);
         }
@@ -136,20 +142,19 @@ namespace Doctor_Appointment.Controllers
         }
 
         // GET: DailyAvailbilities/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null || _context.dailyAvailbilities == null)
+            if (_context.dailyAvailbilities == null)
             {
                 return NotFound();
             }
 
-            var dailyAvailbility = await _context.dailyAvailbilities
+            var dailyAvailbility = _context.dailyAvailbilities.Include(a => a.DoctorID)
                 .FirstOrDefaultAsync(m => m.Dayid == id);
             if (dailyAvailbility == null)
             {
                 return NotFound();
             }
-
             return View(dailyAvailbility);
         }
 

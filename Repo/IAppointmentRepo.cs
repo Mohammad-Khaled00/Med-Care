@@ -4,7 +4,6 @@ namespace Doctor_Appointment.Repo
 {
     public interface IAppointmentRepo
     {
-        //public List<Appointment> GetAll(int PatId);
 
         public List<Appointment> GetAll(int AppId);
         public Appointment GetById(int Id);

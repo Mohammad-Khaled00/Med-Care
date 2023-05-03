@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Doctor_Appointment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230501151448_CleanMigration")]
-    partial class CleanMigration
+    [Migration("20230503190927_MergWithIdentity")]
+    partial class MergWithIdentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

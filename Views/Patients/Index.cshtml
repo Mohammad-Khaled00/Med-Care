@@ -56,7 +56,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PatientID">Edit</a> |
-                <a asp-action="Index" asp-controller="Appointments" asp-route-AppId="@item.PatientID">Details</a> |
+                    <a asp-action="Index" asp-controller="Appointments" asp-route-patId="@item.PatientID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.PatientID">Delete</a>
 
             </td>

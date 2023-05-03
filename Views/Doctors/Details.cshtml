@@ -104,5 +104,6 @@
 </div>
 <div>
     <a asp-action="Create" asp-controller="Appointments" asp-route-id="DoctorID" asp-route-AppId="PatientID">Book</a> |
+    <a asp-action="Delete" asp-route-id="@Model.DoctorID">Delete</a>
     <a asp-controller="Home" asp-action="SpecialistFilter">Back to List</a>
 </div>

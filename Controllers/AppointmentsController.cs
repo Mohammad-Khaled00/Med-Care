@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Doctor_Appointment.Data;
 using Doctor_Appointment.Repo;
 using Doctor_Appointment.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Doctor_Appointment.Controllers
 {
+    //[Authorize(Roles ="Patient")]
     public class AppointmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,12 +27,13 @@ namespace Doctor_Appointment.Controllers
 
         // GET: Appointments
 
-        public async Task<IActionResult> Index(int AppId)
+        //[Authorize]
+        public async Task<IActionResult> Index(int patId)
         {
 
             ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
-
-            return View(Repo.GetAll(AppId));
+            
+            return View(Repo.GetAll(patId));
          
         }
 
@@ -62,29 +65,27 @@ namespace Doctor_Appointment.Controllers
             return View();
         }
 
-        // POST: Appointments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DoctorID,PatientID,AppointmentDay,AppointmentTime,AppointmentType,MedicalHistory")] Appointment appointment)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
-            try
-            {
-                Repo.Insert(appointment);
+                try
+                {
+                    Repo.Insert(appointment);
+
+                    return RedirectToAction("Details");
+
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return NotFound();
+                }
             }
-            catch (DbUpdateConcurrencyException)
-            {
+            else
                 return NotFound();
-            }
-            }
-            //ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName", appointment.DoctorID);
-            //ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName", appointment.PatientID);
-
-            return RedirectToAction("Details");
         }
 
         // GET: Appointments/Edit/5
@@ -102,8 +103,6 @@ namespace Doctor_Appointment.Controllers
             {
                 return NotFound();
             }
-            //ViewBag.DoctorID = new SelectList(_context.Doctors, "DoctorID", "FullName", appointment.DoctorID);
-            //ViewBag.PatientID= new SelectList(_context.Patients, "PatientID", "FullName", appointment.PatientID);
             return View();
         }
 
