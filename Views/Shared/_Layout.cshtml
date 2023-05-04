@@ -1,4 +1,8 @@
-﻿<html lang="en">
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<html lang="en">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -83,12 +87,12 @@
                       
 
                       
-@*                        @if (SignInManager.IsSignedIn(User))
+                        @if (SignInManager.IsSignedIn(User))
                         {
                          <li>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Index" asp-route-patId="@Model.">Your Appointments</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Appointments" asp-action="Index">Your Appointments</a>
                         </li>
-                        }*@
+                        }
                         <li class="nav-item">
                             <a  class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">About Us</a>
                         </li>

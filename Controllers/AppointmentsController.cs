@@ -1,35 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Doctor_Appointment.Data;
+using Doctor_Appointment.Models;
+using Doctor_Appointment.Repo;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Doctor_Appointment.Data;
-using Doctor_Appointment.Repo;
-using Doctor_Appointment.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Doctor_Appointment.Controllers
 {
-    [Authorize(Roles ="Patient")]
+    [Authorize(Roles = "Patient")]
     public class AppointmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _user;
 
         public IAppointmentRepo Repo { get; }
 
-        public AppointmentsController(ApplicationDbContext context, IAppointmentRepo repo)
+        public AppointmentsController(ApplicationDbContext context, IAppointmentRepo repo, SignInManager<IdentityUser> manager, UserManager<IdentityUser> user)
         {
             _context = context;
             Repo = repo;
+            _signInManager = manager;
+            _user = user;
         }
 
         // GET: Appointments
 
         [Authorize]
-        public IActionResult Index(int patId)
+        public IActionResult Index()
         {
+            var patId = _context.Patients.First(p => p.IdentityId == User.Claims.First().Value).PatientID;
 
             ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
 
@@ -45,10 +47,10 @@ namespace Doctor_Appointment.Controllers
                 return NotFound();
             }
 
-            var appointment =  _context.Appointments
+            var appointment = _context.Appointments
                 .Include(a => a.doctor)
                 .Include(a => a.patient)
-                .Where(m => m.appointmentID==id);
+                .Where(m => m.appointmentID == id);
             if (appointment == null)
             {
                 return NotFound();
@@ -57,27 +59,30 @@ namespace Doctor_Appointment.Controllers
             return View(Repo.GetById(id));
         }
 
-		// GET: Appointments/Create
-		public IActionResult Create(int Docid)
-		{
-			//ViewData["DoctorID"] = new SelectList(_context.Doctors.Include(d=>d.availableDays), "DoctorID", "FullName");
-			//ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName");
+        // GET: Appointments/Create
+        public IActionResult Create(int Docid)
+        {
+            //ViewData["DoctorID"] = new SelectList(_context.Doctors.Include(d=>d.availableDays), "DoctorID", "FullName");
+            //ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName");
 
-			//var DoctorDates = _context.Doctors.Include(d => d.availableDays)
-			//    .Select(d=> new {docId=d.DoctorID ,DocName=d.FullName , dates=d.availableDays
-			//    .Select(a=>a.date).Distinct()}).ToList();
+            //var DoctorDates = _context.Doctors.Include(d => d.availableDays)
+            //    .Select(d=> new {docId=d.DoctorID ,DocName=d.FullName , dates=d.availableDays
+            //    .Select(a=>a.date).Distinct()}).ToList();
 
             ViewBag.DoctorDates = _context.Doctors.Include(d => d.availableDays)
             .FirstOrDefault(d => d.DoctorID == Docid);
 
+            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName");
+            var patient = _context.Patients.First(p => p.IdentityId == User.Claims.First().Value);
+            ViewData["PatientID"] = patient.PatientID;
 
             return View();
-		}
+        }
 
 
-		[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DoctorID,PatientID,AppointmentDay,AppointmentTime,AppointmentType,MedicalHistory")] Appointment appointment)
+        public IActionResult Create(Appointment appointment)
         {
             if (ModelState.IsValid)
             {
@@ -102,13 +107,13 @@ namespace Doctor_Appointment.Controllers
         public IActionResult Edit(int id)
         {
             ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
-            
+
             if (_context.Appointments == null)
             {
                 return NotFound();
             }
 
-            var appointment = _context.Appointments.FirstOrDefault(a => a.appointmentID==id);
+            var appointment = _context.Appointments.FirstOrDefault(a => a.appointmentID == id);
             if (appointment == null)
             {
                 return NotFound();
@@ -123,37 +128,37 @@ namespace Doctor_Appointment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("DoctorID,PatientID,AppointmentDay,AppointmentTime,AppointmentType,MedicalHistory")] Appointment appointment)
         {
-   
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    Repo.Update(appointment.DoctorID,appointment.PatientID,appointment);
+                    Repo.Update(appointment.DoctorID, appointment.PatientID, appointment);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                        return NotFound();
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }
-           
+
             return View();
         }
 
         // GET: Appointments/Delete/5
-        public async Task<IActionResult> Delete(int Docid , int Patid)
+        public async Task<IActionResult> Delete(int Docid, int Patid)
         {
             ViewBag.date = _context.Appointments.Select(a => a.dailyAvailbility.Dayid);
 
             var appointment = await _context.Appointments
                 .Include(a => a.doctor)
                 .Include(a => a.patient)
-                .FirstOrDefaultAsync(m => m.DoctorID == Docid && m.PatientID==Patid);
+                .FirstOrDefaultAsync(m => m.DoctorID == Docid && m.PatientID == Patid);
 
             if (appointment != null)
             {
-                Repo.Delete(appointment.DoctorID,appointment.PatientID);
+                Repo.Delete(appointment.DoctorID, appointment.PatientID);
             }
 
             return View();
@@ -168,10 +173,10 @@ namespace Doctor_Appointment.Controllers
             //{
             //    return Problem("Entity set 'MedcareDbContext.Appointments'  is null.");
             //}
-            var appointment = _context.Appointments.FirstOrDefault(m=>m.DoctorID== DocId && m.PatientID== PatId);
+            var appointment = _context.Appointments.FirstOrDefault(m => m.DoctorID == DocId && m.PatientID == PatId);
             if (appointment != null)
             {
-                Repo.Delete(DocId , PatId);
+                Repo.Delete(DocId, PatId);
 
             }
             return RedirectToAction(nameof(Index));
@@ -179,7 +184,7 @@ namespace Doctor_Appointment.Controllers
 
         private bool AppointmentExists(int id)
         {
-          return (_context.Appointments?.Any(e => e.DoctorID == id)).GetValueOrDefault();
+            return (_context.Appointments?.Any(e => e.DoctorID == id)).GetValueOrDefault();
         }
     }
 }
