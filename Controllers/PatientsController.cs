@@ -75,9 +75,9 @@ namespace Doctor_Appointment.Controllers
             {
                 _context.Add(patient);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("SpecialistFilter","Home");
-            }
-            return View(patient);
+				return RedirectToAction("Index", "Home");
+			}
+			return View(patient);
         }
 
         // GET: Patients/Edit/5

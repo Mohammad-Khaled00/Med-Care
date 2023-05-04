@@ -61,7 +61,7 @@
 
 					@*href="appoinment.html"
 					@*<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>*@
-					<a class="btn btn-main-2 btn-round-full mt-3" asp-area="" asp-controller="Appointments" asp-action="Create">Make an Appoinment<i class="icofont-simple-right ml-2  "></i></a>
+					<a class="btn btn-main-2 btn-round-full mt-3" asp-area="" asp-route-Docid="@Model.DoctorID" asp-controller="Appointments" asp-action="Create">Make an Appoinment<i class="icofont-simple-right ml-2  "></i></a>
 					<a class="btn btn-main-2 btn-round-full mt-3" asp-area="" asp-controller="Doctors" asp-action="Index">Back to List<i class="icofont-simple-right ml-2  "></i></a>
 				</div>
 			</div>

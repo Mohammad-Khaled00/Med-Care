@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Create";
+
+    var date = ViewBag.doctor;
 }
 
 @*<section class="page-title bg-1">
@@ -40,61 +42,92 @@
             <div class="col-lg-8">
                 <div class="appoinment-wrap mt-5 mt-lg-0 pl-lg-5">
                     <h2 class="mb-2 title-color">Book an appoinment</h2>
-                  
+                    <p class="mb-4">Mollitia dicta commodi est recusandae iste, natus eum asperiores corrupti qui velit . Iste dolorum atque similique praesentium soluta.</p>
                     <form id="#" class="appoinment-form" method="post" action="/Appointments/Details">
                         <div class="row">
-                     
                             <div class="col-lg-6">
-                            <div class="form-group">
+
+                                <div class="form-group">
+
+                                    <input type="hidden" asp-for="PatientID" />
+                                    <input type="hidden" asp-for="DoctorID" />
+
+                                </div>
+                                @*               </div>
+                                <div class="col-lg-6">
+                                <div class="form-group">
                                 <label asp-for="availableDays" class="control-label">Day</label>
                                 <input type="date" asp-for="availableDays" class="form-control" />
                                 <span asp-validation-for="availableDays" class="text-danger"></span>
-                            </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label asp-for="availableDays" class="control-label">Time</label>
-                                    <input type="time" asp-for="availableDays" class="form-control" placeholder="Enter Time In format Hour:Minuts" />
-                                    <span asp-validation-for="availableDays" class="text-danger"></span>
-                                 
                                 </div>
-                            </div>
-
-                            <div class="col-lg-6">
+                                </div>
+                                <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label asp-for="AppointmentType" class="control-label"></label>
-                                    <select asp-for="AppointmentType" class="form-control" asp-items="@Html.GetEnumSelectList<AppointmentType>()"></select>
-                                    <span asp-validation-for="AppointmentType" class="text-danger"></span>
+                                <label asp-for="availableDays" class="control-label">Time</label>
+                                <input type="time" asp-for="availableDays" class="form-control" placeholder="Enter Time In format Hour:Minuts" />
+                                <span asp-validation-for="availableDays" class="text-danger"></span>
+
+                                </div>
+                                </div>
+
+
+                                *@
+                                <div>
+                                    <p>
+                                        @for (int i = date.dailyAvailbility.starttime; i < date.dailyAvailbility.endtime; i++)
+                                        {
+                                            <div>
+                                                <input class="form-check-input" type="radio" name="days" value="@i"> <label class="form-check-label"> @i </label>
+                                            </div>
+                                        }
+                                    </p>
+
+                                    @* <p>
+                                    @foreach (var item in date)
+                                    {
+                                    <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                    Patient
+                                    </label>
+
                                     </div>
-                                 
-                                </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
 
-                                    <label asp-for="PatientID" class="control-label" hidden></label>
-                                    <input type="text" asp-for="PatientID" class="form-control" asp-items="ViewBag.PatientID" hidden />
+                                    <input type="radio" class="btn btn-primary" name="days" value="@provider.Name" title="Log in using your @provider.DisplayName account" style="background-color:#e12454">@provider.DisplayName</input>
+                                    }
+                                    </p>*@
                                 </div>
-                            </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label asp-for="AppointmentType" class="control-label"></label>
+                                        <select asp-for="AppointmentType" class="form-control" asp-items="@Html.GetEnumSelectList<AppointmentType>()"></select>
+                                        <span asp-validation-for="AppointmentType" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label asp-for="MedicalHistory" class="control-label"></label>
                                         <textarea asp-for="MedicalHistory" name="message" id="message" class="form-control" rows="3" style=" width:700px" placeholder="Your Message"></textarea>
-                                    
+
                                         <span asp-validation-for="MedicalHistory" class="text-danger"></span>
-                                  
+
                                     </div>
                                 </div>
 
-                                </div>
+                            </div>
 
                             <div class="col-lg-6">
-                              
+
                                 <a class="btn btn-main btn-round-full" asp-controller="Home" asp-action="Index">Cancel<i class="icofont-simple-right ml-2"></i></a>
 
 
-                            <input type="submit" asp-route-AppId="PatientID" value=" Create" class="btn btn-primary btn-round-full" asp-controller="Paypal" asp-action="Index" />
-                                
+                                <input type="submit" value="Create" class="btn btn-primary btn-round-full" asp-controller="PayPal" asp-action="Index" />
+
                             </div>
 
                     </form>
@@ -102,7 +135,7 @@
             </div>
         </div>
     </div>
-  
+
 </section>
 
 

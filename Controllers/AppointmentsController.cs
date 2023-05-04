@@ -57,15 +57,26 @@ namespace Doctor_Appointment.Controllers
             return View(Repo.GetById(id));
         }
 
-        // GET: Appointments/Create
-        public IActionResult Create()
-        {
-            ViewData["DoctorID"] = new SelectList(_context.Doctors, "DoctorID", "FullName");
-            ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName");
-            return View();
-        }
+		// GET: Appointments/Create
+		public IActionResult Create(int Docid)
+		{
+			//ViewData["DoctorID"] = new SelectList(_context.Doctors.Include(d=>d.availableDays), "DoctorID", "FullName");
+			//ViewData["PatientID"] = new SelectList(_context.Patients, "PatientID", "FullName");
 
-        [HttpPost]
+			//var DoctorDates = _context.Doctors.Include(d => d.availableDays)
+			//    .Select(d=> new {docId=d.DoctorID ,DocName=d.FullName , dates=d.availableDays
+			//    .Select(a=>a.date).Distinct()}).ToList();
+
+			var DoctorDates = _context.Doctors.Include(d => d.availableDays)
+				.Where(d => d.DoctorID == Docid)
+				.Select(d => d.availableDays.Select(day => day.date).Distinct());
+
+
+			return View();
+		}
+
+
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DoctorID,PatientID,AppointmentDay,AppointmentTime,AppointmentType,MedicalHistory")] Appointment appointment)
         {
