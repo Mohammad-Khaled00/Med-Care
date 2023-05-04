@@ -67,12 +67,11 @@ namespace Doctor_Appointment.Controllers
 			//    .Select(d=> new {docId=d.DoctorID ,DocName=d.FullName , dates=d.availableDays
 			//    .Select(a=>a.date).Distinct()}).ToList();
 
-			var DoctorDates = _context.Doctors.Include(d => d.availableDays)
-				.Where(d => d.DoctorID == Docid)
-				.Select(d => d.availableDays.Select(day => day.date).Distinct());
+            ViewBag.DoctorDates = _context.Doctors.Include(d => d.availableDays)
+            .FirstOrDefault(d => d.DoctorID == Docid);
 
 
-			return View();
+            return View();
 		}
 
 
@@ -87,7 +86,7 @@ namespace Doctor_Appointment.Controllers
                 {
                     Repo.Insert(appointment);
 
-                    return RedirectToAction("Details");
+                    return RedirectToAction("Index", "PayPal");
 
                 }
                 catch (DbUpdateConcurrencyException)

@@ -6,7 +6,7 @@
     var date = ViewBag.doctor;
 }
 
-@*<section class="page-title bg-1">
+<section class="page-title bg-1">
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-</section>*@
+</section>
 
 <section class="appoinment section">
     <div class="container">
@@ -51,9 +51,10 @@
 
                                     <input type="hidden" asp-for="PatientID" />
                                     <input type="hidden" asp-for="DoctorID" />
-
+                                    <label asp-for="patient.FullName" class="control-label"></label>
+                                    <input type="text" asp-for="patient.FullName" class="form-control" />
                                 </div>
-                                @*               </div>
+                            </div>
                                 <div class="col-lg-6">
                                 <div class="form-group">
                                 <label asp-for="availableDays" class="control-label">Day</label>
@@ -70,10 +71,8 @@
                                 </div>
                                 </div>
 
-
-                                *@
-                                <div>
-                                    <p>
+                <div>
+                    @* <p>
                                         @for (int i = date.dailyAvailbility.starttime; i < date.dailyAvailbility.endtime; i++)
                                         {
                                             <div>
@@ -82,7 +81,7 @@
                                         }
                                     </p>
 
-                                    @* <p>
+                                     <p>
                                     @foreach (var item in date)
                                     {
                                     <div class="form-check mb-3">
@@ -126,7 +125,7 @@
                                 <a class="btn btn-main btn-round-full" asp-controller="Home" asp-action="Index">Cancel<i class="icofont-simple-right ml-2"></i></a>
 
 
-                                <input type="submit" value="Create" class="btn btn-primary btn-round-full" asp-controller="PayPal" asp-action="Index" />
+                                <input type="submit" value="Create" class="btn btn-primary btn-round-full" />
 
                             </div>
 
