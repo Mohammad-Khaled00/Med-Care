@@ -12,6 +12,9 @@ namespace Doctor_Appointment.Models
         [Key]
         public int PatientID { get; set; }
 
+        [MaxLength(450)]
+        public required string IdentityId { get; set; } = "";
+
         [Required]
         [MinLength(10)]
         public string FullName { get; set; }
@@ -26,7 +29,7 @@ namespace Doctor_Appointment.Models
         [Required]
         [DataType(DataType.PhoneNumber)]
         public int PhonNum { get; set; }
-      
+
         [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
@@ -36,6 +39,6 @@ namespace Doctor_Appointment.Models
         //public Appointment? appointment { get; set; }
 
 
-        }
     }
+}
 

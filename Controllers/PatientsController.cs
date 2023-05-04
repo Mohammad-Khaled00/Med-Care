@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Doctor_Appointment.Data;
-using Doctor_Appointment.Repo;
+﻿using Doctor_Appointment.Data;
 using Doctor_Appointment.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Doctor_Appointment.Controllers
 {
@@ -17,19 +12,23 @@ namespace Doctor_Appointment.Controllers
     public class PatientsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _user;
 
-        public PatientsController(ApplicationDbContext context)
+        public PatientsController(ApplicationDbContext context, SignInManager<IdentityUser> manager, UserManager<IdentityUser> user)
         {
             _context = context;
+            _signInManager = manager;
+            _user = user;
         }
 
         // GET: Patients
         [Authorize]
         public async Task<IActionResult> Index()
         {
-              return _context.Patients != null ? 
-                          View(await _context.Patients.ToListAsync()) :
-                          Problem("Entity set 'MedcareDbContext.Patients'  is null.");
+            return _context.Patients != null ?
+                        View(await _context.Patients.ToListAsync()) :
+                        Problem("Entity set 'MedcareDbContext.Patients'  is null.");
         }
 
 
@@ -37,7 +36,7 @@ namespace Doctor_Appointment.Controllers
 
         public IActionResult AllApp(int PatId)
         {
-            return RedirectToAction("Index" , "Appointments");
+            return RedirectToAction("Index", "Appointments");
         }
 
         // GET: Patients/Details/5
@@ -73,11 +72,16 @@ namespace Doctor_Appointment.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (_signInManager.IsSignedIn(User))
+                {
+                    var userIdentity = User.Claims.First().Value;
+                    patient.IdentityId = userIdentity;
+                }
                 _context.Add(patient);
                 await _context.SaveChangesAsync();
-				return RedirectToAction("Index", "Home");
-			}
-			return View(patient);
+                return RedirectToAction("Index", "Home");
+            }
+            return View(patient);
         }
 
         // GET: Patients/Edit/5
@@ -163,14 +167,14 @@ namespace Doctor_Appointment.Controllers
             {
                 _context.Patients.Remove(patient);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PatientExists(int id)
         {
-          return (_context.Patients?.Any(e => e.PatientID == id)).GetValueOrDefault();
+            return (_context.Patients?.Any(e => e.PatientID == id)).GetValueOrDefault();
         }
     }
 }
